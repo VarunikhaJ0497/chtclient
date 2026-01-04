@@ -11,8 +11,8 @@
     "socket.io-client": "^4.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "npx react-scripts start",
+    "build": "npx react-scripts build"
   },
   "browserslist": {
     "production": [
