@@ -1,0 +1,56 @@
+.status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.online {
+  background-color: #22c55e;
+}
+
+.offline {
+  background-color: gray;
+}
+
+.friend {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.friend.active {
+  background-color: #404442;
+}
+
+.chat-container {
+  display: flex;
+  height: 100vh;
+}
+
+.friends {
+  width: 250px;
+  background: #011006;
+  color: rgb(171, 246, 207);
+}
+
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  background:rgb(141, 232, 186)
+}
+
+.me {
+  text-align: right;
+  color: rgb(10, 86, 43);
+  border-color:#011006;
+}
+
+.them {
+  text-align: left;
+  color: rgb(9, 34, 3);
+  border-color:#011006
+}
+
