@@ -22,10 +22,16 @@ export default function Login() {
 
     try {
       const res = await API.post("/api/auth/login", { email, password });
+
+      // ✅ Save token for session
+      localStorage.setItem("token", res.data.token);
+
+      // ✅ Save user in context
       login(res.data.user);
+
       navigate("/chat");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(err.response?.data || "Login failed");
     }
   };
 
@@ -39,20 +45,19 @@ export default function Login() {
         <input
           placeholder="Email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <button type="submit">Login</button>
       </form>
 
-      {/* ✅ REGISTER LINK ADDED HERE */}
       <p style={{ marginTop: "10px" }}>
         Don’t have an account? <Link to="/register">Register</Link>
       </p>
