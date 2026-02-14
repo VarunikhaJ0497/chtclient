@@ -42,17 +42,28 @@ export default function Chat() {
   }, []);
 
   // FETCH FRIENDS
-  useEffect(() => {
-    const fetchFriends = async () => {
-      const res = await API.get("/users", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
+  // FETCH FRIENDS
+ useEffect(() => 
+ {
+   const fetchFriends = async () => 
+   {
+    try
+    {
+      const res = await API.get("/api/users");
       setFriends(res.data);
-    };
+    } 
+    catch (err) 
+    {
+      console.log("Error fetching users:", err);
+    }
+   };
+
+   if (user) 
+   {
     fetchFriends();
-  }, []);
+   }
+ }, [user]);
+
 
   const sendMessage = () => {
     if (!currentFriend || !message) return;
