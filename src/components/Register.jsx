@@ -1,51 +1,69 @@
 import "./Auth.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../api";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const register = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (!username || !email || !password) {
-      alert("All fields required");
+      setError("All fields are required");
       return;
     }
 
-    await API.post("/api/auth/register", {
-      username,
-      email,
-      password
-    });
+    try {
+      await API.post("/api/auth/register", {
+        username,
+        email,
+        password,
+      });
 
-    alert("Registered successfully. Please login.");
+      // After successful register → go to login
+      navigate("/login");
+
+    } catch (err) {
+      setError(err.response?.data || "Register failed");
+    }
   };
 
   return (
     <div className="auth-container">
       <h2>Register</h2>
 
-      <input
-        placeholder="Username"
-        onChange={e => setUsername(e.target.value)}
-      />
+      {error && <p className="error">{error}</p>}
 
-      <input
-        placeholder="Email"
-        onChange={e => setEmail(e.target.value)}
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
-      />
+        <input
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={register}>Register</button>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <p>
+        <button type="submit">Register</button>
+      </form>
+
+      <p style={{ marginTop: "10px" }}>
         Already have an account? <Link to="/login">Login</Link>
       </p>
     </div>
